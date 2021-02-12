@@ -1,11 +1,45 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {editBlog} from '../actions';
+import {connect} from 'react-redux';
 
 class Edit extends Component {
+  state = {
+    title: this.props.navigation.state.params.title,
+    // this passes out the text of that key
+    content: this.props.navigation.state.params.content,
+    key: this.props.navigation.state.params.key,
+  };
+
+  submit = () => {
+    this.props.editBlog(this.state.title, this.state.content, this.state.key);
+
+    this.setState({
+      title: '',
+      content: '',
+      key: '',
+    });
+
+    this.props.navigation.navigate('Blogs');
+  };
   render() {
     return (
       <View style={Styles.container}>
-        <Text>I am probably the edit screen </Text>
+        <Text style={{textAlign: 'right'}}> Update Post</Text>
+        <TextInput
+          style={Styles.title}
+          placeholder="title"
+          onChangeText={(title) => this.setState({title})}
+          value={this.state.title}
+        />
+
+        <TextInput
+          style={Styles.content}
+          placeholder="content"
+          onChangeText={(content) => this.setState({content})}
+          value={this.state.content}
+        />
+        <Button title="Submit" onPress={this.submit} />
       </View>
     );
   }
@@ -15,9 +49,21 @@ const Styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
+    padding: 30,
+  },
+  title: {
+    marginTop: 20,
+    height: 40,
+    borderColor: 'grey',
+    borderWidth: 1,
+  },
+  content: {
+    marginTop: 20,
+    height: 100,
+    borderColor: 'grey',
+    borderWidth: 1,
   },
 });
 
-export default Edit;
+export default connect(null, {editBlog})(Edit);

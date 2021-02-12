@@ -7,7 +7,7 @@ import {
   FlatList,
   TouchableHighlight,
 } from 'react-native';
-import {getBlogs} from '../actions';
+import {getBlogs, deleteBlog} from '../actions';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -18,10 +18,8 @@ class Blogs extends Component {
   }
 
   render() {
-    console.log('Blogs.js', this.props.listOfBlogs);
     return (
       <View style={Styles.container}>
-        <Text>Fetch Blog articles</Text>
         <FlatList
           style={{width: '100%'}}
           data={this.props.listOfBlogs}
@@ -39,12 +37,15 @@ class Blogs extends Component {
                     paddingLeft: 13,
                   }}>
                   <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate('Edit')}>
+                    onPress={() =>
+                      this.props.navigation.navigate('Edit', {...item})
+                    }>
                     <View>
                       <Icon size={30} color="white" name="edit" />
                     </View>
                   </TouchableHighlight>
-                  <TouchableHighlight>
+                  <TouchableHighlight
+                    onPress={() => this.props.deleteBlog(item.key)}>
                     <View>
                       <Icon size={30} color="white" name="trash-o" />
                     </View>
@@ -55,10 +56,7 @@ class Blogs extends Component {
           }}
         />
 
-        {/* <Button
-          title="Go to Edit"
-          onPress={() => this.props.navigation.navigate('Edit')} //(from routes)
-        /> */}
+
       </View>
     );
   }
@@ -82,7 +80,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 10,
+    padding: 14,
   },
   contentContainer: {
     elevation: 8,
@@ -92,10 +90,13 @@ const Styles = StyleSheet.create({
     marginBottom: 15,
   },
   title: {
-    fontSize: 25,
+    fontSize: 28,
     color: '#fff',
     borderRadius: 15,
     fontWeight: 'bold',
+    marginBottom: 10,
+    marginRight: 10,
+    textAlign: 'right',
   },
   content: {
     fontSize: 20,
@@ -104,10 +105,11 @@ const Styles = StyleSheet.create({
     elevation: 10,
     padding: 10,
     backgroundColor: '#575FCF',
+    marginBottom: 4,
   },
   // FlatList: {
   //     width: '100% ',
   // },
 });
 
-export default connect(mapStateToProps, {getBlogs})(Blogs);
+export default connect(mapStateToProps, {getBlogs, deleteBlog})(Blogs);

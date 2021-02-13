@@ -90,7 +90,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 30,
+    paddingTop: 37,
     paddingRight: 30,
     paddingLeft: 30,
     marginTop: 20,
@@ -99,7 +99,7 @@ const Styles = StyleSheet.create({
     elevation: 8,
     borderRadius: 15,
     backgroundColor: '#354a2c',
-    padding: 20,
+    padding: 14,
     marginBottom: 15,
   },
   title: {
@@ -112,12 +112,12 @@ const Styles = StyleSheet.create({
     textAlign: 'right',
   },
   content: {
-    fontSize: 20,
+    fontSize: 23,
     lineHeight: 30,
-    color: '#fff',
+    color: '#354a2c',
     elevation: 10,
     padding: 10,
-    backgroundColor: '#3c4d33',
+    backgroundColor: '#fff',
     marginBottom: 4,
   },
   // FlatList: {

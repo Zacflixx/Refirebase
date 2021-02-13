@@ -90,7 +90,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 37,
+    paddingTop: 100,
     paddingRight: 30,
     paddingLeft: 30,
     marginTop: 20,
@@ -103,7 +103,7 @@ const Styles = StyleSheet.create({
     marginBottom: 15,
   },
   title: {
-    fontSize: 28,
+    fontSize: 23,
     color: '#fff',
     borderRadius: 15,
     fontWeight: 'bold',
@@ -112,7 +112,7 @@ const Styles = StyleSheet.create({
     textAlign: 'right',
   },
   content: {
-    fontSize: 23,
+    fontSize: 18,
     lineHeight: 30,
     color: '#354a2c',
     elevation: 10,

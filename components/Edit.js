@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  ImageBackground,
+} from 'react-native';
 import {editBlog} from '../actions';
 import {connect} from 'react-redux';
 
@@ -24,23 +31,29 @@ class Edit extends Component {
   };
   render() {
     return (
-      <View style={Styles.container}>
-        <Text style={{textAlign: 'right'}}> Update Post</Text>
-        <TextInput
-          style={Styles.title}
-          placeholder="title"
-          onChangeText={(title) => this.setState({title})}
-          value={this.state.title}
-        />
+      <ImageBackground
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+        source={require('../assets/edit.png')}>
+        <View style={Styles.container}>
+          <TextInput
+            style={Styles.title}
+            placeholder="title"
+            onChangeText={(title) => this.setState({title})}
+            value={this.state.title}
+          />
 
-        <TextInput
-          style={Styles.content}
-          placeholder="content"
-          onChangeText={(content) => this.setState({content})}
-          value={this.state.content}
-        />
-        <Button title="Submit" onPress={this.submit} />
-      </View>
+          <TextInput
+            style={Styles.content}
+            placeholder="content"
+            onChangeText={(content) => this.setState({content})}
+            value={this.state.content}
+          />
+          <Button color="#547A43" title="Submit" onPress={this.submit} />
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -49,7 +62,6 @@ const Styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#fff',
     padding: 30,
   },
   title: {
@@ -57,12 +69,14 @@ const Styles = StyleSheet.create({
     height: 40,
     borderColor: 'grey',
     borderWidth: 1,
+    fontSize: 18,
   },
   content: {
     marginTop: 20,
     height: 100,
     borderColor: 'grey',
     borderWidth: 1,
+    fontSize: 18,
   },
 });
 

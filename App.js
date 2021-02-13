@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Routes from './components/Routes';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
@@ -11,9 +11,9 @@ class App extends Component {
     const state = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
     return (
-      
-          <Routes />
-        </Provider>
+      <Provider store={state}>
+        <Routes />
+      </Provider>
     );
   }
 }

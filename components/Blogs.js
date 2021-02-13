@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Button,
+  ImageBackground,
   FlatList,
   TouchableHighlight,
 } from 'react-native';
@@ -20,48 +21,52 @@ class Blogs extends Component {
   render() {
     // console.log(this.props.loadingReducer);
     return (
-      <View style={Styles.container}>
-        {this.props.loadingReducer ? (
-          <Text>Loading Please Wait</Text>
-        ) : (
-          <FlatList
-            style={{width: '100%'}}
-            data={this.props.listOfBlogs}
-            keyExtractor={(item) => item.key}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => {
-              return (
-                <View style={Styles.contentContainer}>
-                  <Text style={Styles.title}>{item.title}</Text>
-                  <Text style={Styles.content}>{item.content}</Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingLeft: 13,
-                    }}>
-                    <TouchableHighlight
-                      onPress={() =>
-                        this.props.navigation.navigate('Edit', {...item})
-                      }>
-                      <View>
-                        <Icon size={30} color="white" name="edit" />
-                      </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                      onPress={() => this.props.deleteBlog(item.key)}>
-                      <View>
-                        <Icon size={30} color="white" name="trash-o" />
-                      </View>
-                    </TouchableHighlight>
+      <ImageBackground
+        style={{width: '100%', height: '100%'}}
+        source={require('../assets/home.png')}>
+        <View style={Styles.container}>
+          {this.props.loadingReducer ? (
+            <Text>Loading Please Wait</Text>
+          ) : (
+            <FlatList
+              style={{width: '100%'}}
+              data={this.props.listOfBlogs}
+              keyExtractor={(item) => item.key}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => {
+                return (
+                  <View style={Styles.contentContainer}>
+                    <Text style={Styles.title}>{item.title}</Text>
+                    <Text style={Styles.content}>{item.content}</Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        paddingLeft: 13,
+                      }}>
+                      <TouchableHighlight
+                        onPress={() =>
+                          this.props.navigation.navigate('Edit', {...item})
+                        }>
+                        <View>
+                          <Icon size={30} color="white" name="edit" />
+                        </View>
+                      </TouchableHighlight>
+                      <TouchableHighlight
+                        onPress={() => this.props.deleteBlog(item.key)}>
+                        <View>
+                          <Icon size={30} color="white" name="trash-o" />
+                        </View>
+                      </TouchableHighlight>
+                    </View>
                   </View>
-                </View>
-              );
-            }}
-          />
-        )}
-        {/* <Zaq name="ios-star" fontFamily="Ionicons" size={30} /> */}
-      </View>
+                );
+              }}
+            />
+          )}
+          {/* <Zaq name="ios-star" fontFamily="Ionicons" size={30} /> */}
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -85,13 +90,15 @@ const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 14,
+    paddingTop: 30,
+    paddingRight: 30,
+    paddingLeft: 30,
+    marginTop: 20,
   },
   contentContainer: {
     elevation: 8,
     borderRadius: 15,
-    backgroundColor: '#575FCF',
+    backgroundColor: '#354a2c',
     padding: 20,
     marginBottom: 15,
   },
@@ -110,7 +117,7 @@ const Styles = StyleSheet.create({
     color: '#fff',
     elevation: 10,
     padding: 10,
-    backgroundColor: '#575FCF',
+    backgroundColor: '#3c4d33',
     marginBottom: 4,
   },
   // FlatList: {

@@ -2,35 +2,52 @@ import Blogs from './Blogs';
 import Post from './Post';
 import Edit from './Edit';
 
-import StyleSheet from 'react-native';
+import {
+  StyleSheet,
+  backgroundColor,
+  ImageBackground,
+  ImageStyle,
+  Image,
+  image,
+} from 'react-native';
 
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import {createAppContainer} from 'react-navigation';
 
-const NavStack = createStackNavigator(
-  {
-    Blogs: {
-      screen: Blogs,
-      navigationOptions: () => ({
-        headerTitle: 'Blogs',
-        headerTintColor: '#1f3073',
-        // headerTintColor: '#34a61bd',
-      }),
-    },
-    Edit: {
-      screen: Edit,
-      navigationOptions: () => ({
-        headerTitle: 'Edit your text',
-        // headerTintColor: 'red',
+const NavStack = createStackNavigator({
+  Blogs: {
+    screen: Blogs,
+    // navigationOptions: () => ({
+    //   headerTitle: 'Blogs',
+    //   headerTintColor: '#1f3073',
+    //   // headerTintColor: '#34a61bd',
+    // })
+    navigationOptions: {
+      headerShown: false,
+
+      cardStyle: {
+        shadowColor: 'transparent',
+        backgroundColor: 'transparent',
+      },
+      transparentCard: true,
+      transitionConfig: () => ({
+        containerStyle: {
+          backgroundColor: 'transparent',
+        },
       }),
     },
   },
-  {
-    headerLayoutPreset: 'center',
+
+  Edit: {
+    screen: Edit,
+    navigationOptions: () => ({
+      headerTitle: 'Edit your text',
+      headerShown: false,
+    }),
   },
-);
+});
 
 const BottomTab = createBottomTabNavigator({
   NavStack: {

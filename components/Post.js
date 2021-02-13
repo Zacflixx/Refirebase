@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  ImageBackground,
+  backgroundColor,
+} from 'react-native';
 import {postBlogs} from '../actions';
 import {connect} from 'react-redux';
 
@@ -19,23 +27,27 @@ class Post extends Component {
   };
   render() {
     return (
-      <View style={Styles.container}>
-        <Text> Post something here</Text>
-        <TextInput
-          style={Styles.title}
-          placeholder="title"
-          onChangeText={(title) => this.setState({title})}
-          value={this.state.title}
-        />
+      <ImageBackground
+        source={require('../assets/post.png')}
+        style={{flex: 1}}
+        resizeMode="cover">
+        <View style={Styles.container}>
+          <TextInput
+            style={Styles.title}
+            placeholder="title"
+            onChangeText={(title) => this.setState({title})}
+            value={this.state.title}
+          />
 
-        <TextInput
-          style={Styles.content}
-          placeholder="content"
-          onChangeText={(content) => this.setState({content})}
-          value={this.state.content}
-        />
-        <Button title="Submit" onPress={this.submit} />
-      </View>
+          <TextInput
+            style={Styles.content}
+            placeholder="content"
+            onChangeText={(content) => this.setState({content})}
+            value={this.state.content}
+          />
+          <Button color="#547A43" title="Submit" onPress={this.submit} />
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -44,7 +56,6 @@ const Styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#fff',
     padding: 30,
   },
   title: {

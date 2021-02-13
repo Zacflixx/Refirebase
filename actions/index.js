@@ -2,6 +2,12 @@ import firebase from '../fb';
 
 export function getBlogs() {
   return (dispatch) => {
+    // our loading screen
+    dispatch({
+      type: 'BLOGS_LOADING_STATUS',
+      payload: true,
+    });
+
     firebase
       .database()
       .ref('/blogs')
@@ -9,6 +15,10 @@ export function getBlogs() {
         dispatch({
           type: 'BLOGS_FETCH',
           payload: snapshot.val(),
+        });
+        dispatch({
+          type: 'BLOGS_LOADING_STATUS',
+          payload: false,
         });
       });
   };

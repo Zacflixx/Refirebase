@@ -18,45 +18,49 @@ class Blogs extends Component {
   }
 
   render() {
+    // console.log(this.props.loadingReducer);
     return (
       <View style={Styles.container}>
-        <FlatList
-          style={{width: '100%'}}
-          data={this.props.listOfBlogs}
-          keyExtractor={(item) => item.key}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => {
-            return (
-              <View style={Styles.contentContainer}>
-                <Text style={Styles.title}>{item.title}</Text>
-                <Text style={Styles.content}>{item.content}</Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingLeft: 13,
-                  }}>
-                  <TouchableHighlight
-                    onPress={() =>
-                      this.props.navigation.navigate('Edit', {...item})
-                    }>
-                    <View>
-                      <Icon size={30} color="white" name="edit" />
-                    </View>
-                  </TouchableHighlight>
-                  <TouchableHighlight
-                    onPress={() => this.props.deleteBlog(item.key)}>
-                    <View>
-                      <Icon size={30} color="white" name="trash-o" />
-                    </View>
-                  </TouchableHighlight>
+        {this.props.loadingReducer ? (
+          <Text>Loading Please Wait</Text>
+        ) : (
+          <FlatList
+            style={{width: '100%'}}
+            data={this.props.listOfBlogs}
+            keyExtractor={(item) => item.key}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => {
+              return (
+                <View style={Styles.contentContainer}>
+                  <Text style={Styles.title}>{item.title}</Text>
+                  <Text style={Styles.content}>{item.content}</Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      paddingLeft: 13,
+                    }}>
+                    <TouchableHighlight
+                      onPress={() =>
+                        this.props.navigation.navigate('Edit', {...item})
+                      }>
+                      <View>
+                        <Icon size={30} color="white" name="edit" />
+                      </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                      onPress={() => this.props.deleteBlog(item.key)}>
+                      <View>
+                        <Icon size={30} color="white" name="trash-o" />
+                      </View>
+                    </TouchableHighlight>
+                  </View>
                 </View>
-              </View>
-            );
-          }}
-        />
-
-
+              );
+            }}
+          />
+        )}
+        {/* <Zaq name="ios-star" fontFamily="Ionicons" size={30} /> */}
       </View>
     );
   }
@@ -71,6 +75,8 @@ function mapStateToProps(state) {
   });
   return {
     listOfBlogs,
+    loadingReducer: state.loadingReducer.loadingReducer,
+    // one loading reducer from index.js and another from loading reducer.js
   };
 }
 

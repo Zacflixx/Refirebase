@@ -14,8 +14,9 @@ const NavStack = createStackNavigator(
     Blogs: {
       screen: Blogs,
       navigationOptions: () => ({
-        headerTitle: 'Our Blogs',
-        // headerTintColor: 'red',
+        headerTitle: 'Blogs',
+        headerTintColor: '#1f3073',
+        // headerTintColor: '#34a61bd',
       }),
     },
     Edit: {

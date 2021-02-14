@@ -53,6 +53,12 @@ class Post extends Component {
 }
 
 const Styles = StyleSheet.create({
+  content: {
+    marginTop: 20,
+    height: 100,
+    borderColor: 'grey',
+    borderWidth: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -61,12 +67,6 @@ const Styles = StyleSheet.create({
   title: {
     marginTop: 20,
     height: 40,
-    borderColor: 'grey',
-    borderWidth: 1,
-  },
-  content: {
-    marginTop: 20,
-    height: 100,
     borderColor: 'grey',
     borderWidth: 1,
   },

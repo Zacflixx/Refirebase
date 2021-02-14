@@ -19,11 +19,6 @@ import {createAppContainer} from 'react-navigation';
 const NavStack = createStackNavigator({
   Blogs: {
     screen: Blogs,
-    // navigationOptions: () => ({
-    //   headerTitle: 'Blogs',
-    //   headerTintColor: '#1f3073',
-    //   // headerTintColor: '#34a61bd',
-    // })
     navigationOptions: {
       headerShown: false,
 

@@ -1,0 +1,392 @@
+                                               React Native Cheatsheet
+## Create new project
+
+## install dependencies
+  redux 
+  redux thunk
+  react navigation
+  react native reanimated
+  gesture handler
+  create navigation stack
+  bottom tab naigator - react navigation tabs
+
+## create components folder and add
+     Blogs.js          // to display our blogs
+     Post.js           // to read, or write something 
+     Edit.js           // to edit
+     Routes.js         // our route 
+                    (Import Blogs,Post,Edit in Routes)
+
+## Inside Routes.js
+            import {createStackNavigator} from 'react-navigation-stack';
+            import {createBottomTabNavigator} from 'react-navigation-tabs';
+            import {createAppContainer} from 'react-navigation';
+
+  {    
+    const NavStack = createStackNavigator({                                     //this NavStack is passing the Blogs screen and the Edit Screen 
+                                                                                // (They will be linked . it gives the Edit page a back arror)
+  Blogs: {     screen: Blogs,                   
+    navigationOptions: {              //Nav options modifies the navs
+      headerShown: false,             // this removes headers 
+
+      cardStyle: {
+        shadowColor: 'transparent',
+        backgroundColor: 'transparent',
+      },
+      transparentCard: true,
+      transitionConfig: () => ({
+        containerStyle: {
+          backgroundColor: 'transparent',
+            },
+          }),
+       },
+     },
+
+     Edit: {
+        screen: Edit,
+         navigationOptions: () => ({
+           headerTitle: 'Edit your text',
+           headerShown: false,
+              }),
+          },
+       });
+
+         const BottomTab = createBottomTabNavigator({     // this is the bottom tab naigator that will be exported .
+                 NavStack: {    screen: NavStack,  },
+                  Post: {    screen: Post,  },});
+
+                  export default Routes = createAppContainer(BottomTab);
+       } //this braces is irrelevant
+ 
+## Modify App.js as new class App Extends component
+         import React, {Component} from 'react';
+ import {View, Text, StyleSheet} from 'react-native';
+ import Routes from './components/Routes';             //from routes
+ import {Provider} from 'react-redux';
+ import {createStore, applyMiddleware} from 'redux';
+ import ReduxThunk from 'redux-thunk';
+ import reducers from './reducers';   // to be added later
+          class App extends Component {
+               render() {       
+                 const state = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+                    return
+                        <Provider store={state}>
+                          <Routes /> // No View
+                        </Provider> 
+                               }
+          }
+                               export default App;
+
+##Inside Blogs.js 
+         import React, {Component} from 'react';
+   import {  everyting  } from 'react-native';
+   import {getBlogs, deleteBlog} from '../actions';                        // to be created later in new folder actions
+   import {connect} from 'react-redux';
+   import _ from 'lodash';                                                    //to be installed later externally
+   import Icon from 'react-native-vector-icons/FontAwesome';                 //to be installed later externally
+
+     class Blogs extends Component {
+      componentDidMount() {                           //  check first that components getBlogs has mounted
+        this.props.getBlogs();
+       }
+
+  render() {
+    // console.log(this.props.loadingReducer);      //this logs to debuger if item is received- not important
+    return (
+      <ImageBackground
+        style={{width: '100%', height: '100%'}}
+        source={require('../assets/home.png')}>                // our image background 
+
+        <View style={Styles.container}>                        //page container   
+
+          {this.props.loadingReducer ? (                             //this is the pre loading component that displays
+            <Text>Loading Please Wait</Text>
+          ) : 
+          
+          (    //our code starts here
+
+
+            <FlatList
+              style={{width: '100%'}}
+              data={this.props.listOfBlogs}                       //our components from firebase , creating function below using mapStateToProps function
+              keyExtractor={(item) => item.key}                 //item key
+              showsVerticalScrollIndicator={false}
+
+              renderItem={({item}) => {  // rendering our FlatList 
+
+                return (
+                  <View style={Styles.contentContainer}>                        // container for    each data
+                    <Text style={Styles.title}>{item.title}</Text>            //display the title component of that key 
+                    <Text style={Styles.content}>{item.content}</Text>       //display the content component of that key 
+
+                        <View }> \\ This is for the icons under the texts
+                            <TouchableHighlight
+                                 onPress={() => this.props.navigation.navigate('Edit', {...item})  //Navigate to edit screen of that specific item 
+                             }>
+                                   <View>
+                                          <Icon size={30} color="white" name="edit" />
+                                   </View>
+                            </TouchableHighlight>
+                           <TouchableHighlight
+                                 onPress={() => this.props.deleteBlog(item.key)}>   //call delete function from actions/index.js
+                                 <View>
+                                   <Icon size={30} color="white" name="trash-o" />
+                                 </View>
+                           </TouchableHighlight>
+                        </View>
+                  </View>
+                );
+              }}
+            />
+          )}
+          
+        </View>
+      </ImageBackground>
+    );
+  }
+ }
+
+ function mapStateToProps(state) {
+  const listOfBlogs = _.map(state.blogsList.blogsList, (val, key) => {
+    return {
+      ...val,
+      key: key,
+    };
+   });
+   return {
+    listOfBlogs,
+    loadingReducer: state.loadingReducer.loadingReducer,
+    // one loading reducer from index.js and another from loading reducer.js
+  };
+ }
+
+  const Styles = StyleSheet.create({  // },
+ });
+
+  export default connect(mapStateToProps, {getBlogs, deleteBlog})(Blogs);
+
+## create actions folder
+      create file index.js
+          inside actionx/index.js
+                import firebase from '../fb';
+
+                export function getBlogs() {  //this function gets our blogs from firebase
+                  return (dispatch) => {
+                    // our loading screen
+
+                    dispatch({
+                      type: 'BLOGS_LOADING_STATUS',
+                      payload: true,
+                    });
+
+                    firebase
+                      .database()
+                      .ref('/blogs')               // this will be the name of our online database 
+                      .on('value', (snapshot) => {
+                        dispatch({
+                          type: 'BLOGS_FETCH',
+                          payload: snapshot.val(),
+                        });
+                        dispatch({
+                          type: 'BLOGS_LOADING_STATUS',
+                          payload: false,
+                        });
+                      });
+                  };
+                }
+
+                export function postBlogs(title, content)  //this function posts our blogs from firebase {                                                   
+                  return (dispatch) => {
+                    firebase.database().ref('/blogs').push({title, content});
+                    // get from firebase
+                  };
+                }
+
+                export function deleteBlog(key) { //this function deletes our blogs from firebase
+                  return (dispatch) => {
+                    firebase.database().ref(`/blogs/${key}`).remove();
+                    // delete from firebase
+                  };
+                }
+
+                export function editBlog(title, content, key) //this function edits our blogs from firebase with that key 
+                 {
+                  return (dispatch) => {
+                    firebase.database().ref(`/blogs`).child(key).update({title, content});
+                    // edit from firebase
+                  };
+                }
+
+## Firebase Setup
+         open firebase
+         sign in and add project
+         click add web app and write name 
+         copy everything inside <script> without analytics  
+         (stop project)
+         create new file fb.js  //firebase file 
+              Inside fb.js             
+                import * as firebase from 'firebase';
+
+                        var firebaseConfig = {              // from firebase app
+                               apiKey: 'AIzaSyCLR8i7q5EstFoGqNO59CLKS75FAiyY84Q',
+                               authDomain: 'rnfirebase-b84c5.firebaseapp.com',
+                               projectId: 'rnfirebase-b84c5',
+                               storageBucket: 'rnfirebase-b84c5.appspot.com',
+                               messagingSenderId: '199757056130',
+                               appId: '1:199757056130:web:3012e40055444b26434c9b',
+                               measurementId: 'G-2ZN6D8SHNP',
+                        };
+                        // Initialize Firebase
+                        firebase.initializeApp(firebaseConfig);
+
+                        export default firebase;
+
+         yarn add firebase;
+
+## reducers 
+      create folder reducers
+          create files BlogReducer.js, index.js , loading reducer.js
+              inside index.js
+                          import {combineReducers} from 'redux';         this adds the reducers
+                          import BlogReducer from './BlogReducer';
+                          import LoadingReducer from './LoadingReducer';
+
+
+                          const rootReducer = combineReducers({
+                            blogsList: BlogReducer,
+                            loadingReducer: LoadingReducer,
+                          });
+
+                          export default rootReducer;
+
+
+              inside BlogReducer.js
+                       export default function (state = {}, action) {
+                                switch (action.type) {
+                                    case 'BLOGS_FETCH':
+                                        return {
+                                            ...state,
+                                            blogsList: action.payload,
+                                        };
+
+                                    default:
+                                        return state;
+                                }
+                            }
+              
+              inside LoadingReducer.js
+                      export default function (state = {}, action) {
+                            switch (action.type) {
+                              case 'BLOGS_LOADING_STATUS':
+                                return {
+                                  ...state,
+                                  loadingReducer: action.payload,
+                                };
+
+                              default:
+                                return state;
+                            }
+                          }
+
+##inside Post.js      // to add data 
+              import React, {Component} from 'react';
+              import {connect} from 'react-redux';
+              import { View,Text, StyleSheet,TextInput, Button, ImageBackground,             backgroundColor, } from 'react-native';
+              import {postBlogs} from '../actions';
+              
+
+              class Post extends Component {
+                state = {   title: '',content: '', };        // our variables 
+
+                submit = () => {                   //our submit button function 
+                  this.props.postBlogs(this.state.title, this.state.content);  // call and set post function
+                  this.setState({ title: '', content: '', });
+                                       //  this clears the input after submit
+                         
+                  this.props.navigation.navigate('NavStack');   // take us back to home 
+
+                  //console.log(show me now", this.state) -- if we wanna log the state in debug
+                };
+
+
+
+                render() {
+                  return (
+                       <View style={Styles.container}>
+                        <TextInput
+                          style={Styles.title}
+                          placeholder="title"
+                          onChangeText={(title) => this.setState({title})} // set the value 
+                          value={this.state.title}                         //default value
+                        />
+
+                        <TextInput
+                          style={Styles.content}
+                          placeholder="content"
+                          onChangeText={(content) => this.setState({content})}
+                          value={this.state.content}
+                        />
+                        <Button color="#547A43" title="Submit" onPress={this.submit} /> //call submit function
+                      </View>
+                  
+                  );
+                }
+              }
+
+              const Styles = StyleSheet.create({
+              });
+
+              export default connect(null, {postBlogs})(Post);
+
+##inside Edit.js
+                  import React, {Component} from 'react';
+                  import {View,Text,StyleSheet,TextInput,Button,ImageBackground,} from 'react-native';
+                  import {editBlog} from '../actions';
+                  import {connect} from 'react-redux';
+
+                  class Edit extends Component {
+                    state = {
+                      title: this.props.navigation.state.params.title,
+                      // this passes out the text of that key as default 
+                      content: this.props.navigation.state.params.content, // this passes out the text of that key as default
+                      key: this.props.navigation.state.params.key,
+                    };
+
+                    submit = () => {
+                      this.props.editBlog(this.state.title, this.state.content, this.state.key);
+
+                      this.setState({title: '', content: '',key: '',});
+                      this.props.navigation.navigate('Blogs');
+                    };
+                    render() {
+                      return (
+                        
+                          source={require('../assets/edit.png')}>
+                          <View style={Styles.container}>
+                            <TextInput
+                              style={Styles.title}
+                              placeholder="title"
+                              onChangeText={(title) => this.setState({title})} //set new title
+                              value={this.state.title}
+                            />
+
+                            <TextInput
+                              style={Styles.content}
+                              placeholder="content"
+                              onChangeText={(content) => this.setState({content})} //set new content
+                              value={this.state.content}
+                            />
+                            <Button color="#547A43" title="Submit" onPress={this.submit} /> //call submit
+                          </View>
+                      );
+                    }
+                  }
+
+                  const Styles = StyleSheet.create({});
+
+                  export default connect(null, {editBlog})(Edit);
+
+
+                     
+
+  

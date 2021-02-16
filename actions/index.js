@@ -10,7 +10,7 @@ export function getBlogs() {
 
     firebase
       .database()
-      .ref('/blogs')
+      .ref('/My blogs')
       .on('value', (snapshot) => {
         dispatch({
           type: 'BLOGS_FETCH',
@@ -26,21 +26,21 @@ export function getBlogs() {
 
 export function postBlogs(title, content) {
   return (dispatch) => {
-    firebase.database().ref('/blogs').push({title, content});
+    firebase.database().ref('/My blogs').push({title, content});
     // get from firebase
   };
 }
 
 export function deleteBlog(key) {
   return (dispatch) => {
-    firebase.database().ref(`/blogs/${key}`).remove();
+    firebase.database().ref(`/My blogs/${key}`).remove();
     // delete from firebase
   };
 }
 
 export function editBlog(title, content, key) {
   return (dispatch) => {
-    firebase.database().ref(`/blogs`).child(key).update({title, content});
+    firebase.database().ref(`/My blogs`).child(key).update({title, content});
     // edit from firebase
   };
 }

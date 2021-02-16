@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+firebase.firestore().collection('events');
 
 var firebaseConfig = {
   apiKey: 'AIzaSyCLR8i7q5EstFoGqNO59CLKS75FAiyY84Q',

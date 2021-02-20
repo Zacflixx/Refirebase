@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "199757056130",
+    "firebase_url": "https://rnfirebase-b84c5-default-rtdb.firebaseio.com",
+    "project_id": "rnfirebase-b84c5",
+    "storage_bucket": "rnfirebase-b84c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199757056130:android:597c2f5d070ca6a4434c9b",
+        "android_client_info": {
+          "package_name": "com.refirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199757056130-h4kev2n7p9fi36n45dodtpe0afvnh5ho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhTvybYlE4fF8nWqDRLi6785sAQ69eO44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199757056130-h4kev2n7p9fi36n45dodtpe0afvnh5ho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

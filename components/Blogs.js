@@ -12,6 +12,7 @@ import {getBlogs, deleteBlog} from '../actions';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import LoginAuth from './Login';
 
 class Blogs extends Component {
   componentDidMount() {
@@ -65,6 +66,12 @@ class Blogs extends Component {
             />
           )}
           {/* <Zaq name="ios-star" fontFamily="Ionicons" size={30} /> */}
+          <Button
+            icon="arrow-right-bold-circle-outline"
+            color="white"
+            Style={Styles.Button}
+            onPress={this.Logoff}
+            title="Logout"></Button>
         </View>
       </ImageBackground>
     );
@@ -120,6 +127,15 @@ const Styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
     marginBottom: 4,
+  },
+  Button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F035E0',
+    textAlign: 'center',
+    height: 40,
+    borderRadius: 5,
+    zIndex: 100,
   },
 
   // FlatList: {

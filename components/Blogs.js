@@ -86,6 +86,23 @@ function mapStateToProps(state) {
 }
 
 const Styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+    paddingRight: 30,
+    paddingLeft: 30,
+    marginTop: 20,
+  },
+  contentContainer: {
+    elevation: 8,
+    borderRadius: 15,
+    backgroundColor: '#354a2c',
+    padding: 14,
+    marginBottom: 15,
+  },
+
   title: {
     fontSize: 23,
     color: '#fff',
@@ -104,22 +121,7 @@ const Styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginBottom: 4,
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-    paddingRight: 30,
-    paddingLeft: 30,
-    marginTop: 20,
-  },
-  contentContainer: {
-    elevation: 8,
-    borderRadius: 15,
-    backgroundColor: '#354a2c',
-    padding: 14,
-    marginBottom: 15,
-  },
+
   // FlatList: {
   //     width: '100% ',
   // },

@@ -17,8 +17,9 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from '../reducers';
-
-import Routes from '../components/Routes';
+import {connect} from 'react-redux';
+import Routes1 from '../components/Routes1';
+import MyApp from '../MyApp';
 
 function LoginAuth() {
   // Set an initializing state whilst Firebase connects
@@ -42,18 +43,20 @@ function LoginAuth() {
     return (
       <View>
         <Text>Login Now</Text>
-        <Button title="Now" />
       </View>
     );
   }
-  const state = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+  // const state = createStore(reducers, {}, applyMiddleware(ReduxThunk));
   return (
-    // <View>
-    <Text>Welcome {user.email}</Text>
-    // <Provider store={state}>
-    //   <Routes />
-    // </Provider>
-    // </View>
+    <View>
+      <Text>Welcome {user.email}</Text>
+      <Button
+        icon="arrow-right-bold-circle-outline"
+        color="black"
+        style={styles.Button}
+        title="Logout"></Button>
+      {/* this.props.navigation.navigate('NavStack') */}
+    </View>
   );
 }
 
@@ -143,7 +146,7 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
+    marginTop: 40,
   },
   inputStyle: {
     marginTop: 20,

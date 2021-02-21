@@ -12,7 +12,6 @@ import {getBlogs, deleteBlog} from '../actions';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import LoginAuth from './Login';
 
 class Blogs extends Component {
   componentDidMount() {

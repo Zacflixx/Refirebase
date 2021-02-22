@@ -58,6 +58,14 @@ import {createAppContainer} from 'react-navigation';
 //   },
 // });
 
+// const NavStack = createStackNavigator({
+//   Login: {
+//     screen: Login,
+//     // navigationOptions: () => ({
+//     //   headerTitle: 'Login in this screen',
+//     // headerShown: false,
+//   },
+// });
 const NavStack = createStackNavigator({
   Blogs: {
     screen: Blogs,
@@ -93,12 +101,9 @@ const BottomTab = createBottomTabNavigator({
   Post: {
     screen: Post,
   },
-  Login: {
-    screen: Login,
-    // navigationOptions: () => ({
-    //   headerTitle: 'Login in this screen',
-    // headerShown: false,
-  },
+  // NavStack2: {
+  //   screen: NavStack2,
+  // },
 });
 
 export default Routes1 = createAppContainer(BottomTab);

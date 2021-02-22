@@ -20,6 +20,9 @@ import reducers from '../reducers';
 import {connect} from 'react-redux';
 import Routes1 from '../components/Routes1';
 import MyApp from '../MyApp';
+import {postBlogs} from '../actions';
+
+// const MyNavScreen = ({navigation}) => this.props.navigation.navigate('Blogs');
 
 function LoginAuth() {
   // Set an initializing state whilst Firebase connects
@@ -47,20 +50,16 @@ function LoginAuth() {
     );
   }
   // const state = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
   return (
-    <View>
-      <Text>Welcome {user.email}</Text>
-      <Button
-        icon="arrow-right-bold-circle-outline"
-        color="black"
-        style={styles.Button}
-        title="Logout"></Button>
-      {/* this.props.navigation.navigate('NavStack') */}
-    </View>
+    <Text>Welcome {user.email}</Text>
+
+    // <Submit2 />
+    // this.props.navigation.navigate('NavStack')
   );
 }
 
-export default class Login extends Component {
+class Login extends Component {
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -92,6 +91,13 @@ export default class Login extends Component {
       .signOut()
       .then(() => console.log('User signed out!'));
   };
+  state = {
+    title: '',
+    content: '',
+  };
+  // submit2 = () => {
+  //   this.props.navigation.navigate('Blogs');
+  // };
   render() {
     return (
       <ImageBackground
@@ -176,3 +182,5 @@ var styles = StyleSheet.create({
     zIndex: 100,
   },
 });
+
+export default Login;
